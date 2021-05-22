@@ -8,6 +8,21 @@ import AuthorBio from "../../components/AuthorBio"
 import PostMeta from "../../components/PostMeta"
 import PostCategories from "../../components/PostCategories"
 import FeaturedMedia from "../../components/FeaturedMedia"
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  LinkedinShareButton,
+  WhatsappShareButton,
+  PinterestShareButton,
+  VKShareButton,
+
+  FacebookIcon,
+  TwitterIcon,
+  LinkedinIcon,
+  WhatsappIcon,
+  PinterestIcon,
+  VKIcon,
+} from "react-share";
 
 const post = ({ data }) => {
   const { nextPage, previousPage, page } = data
@@ -20,11 +35,11 @@ const post = ({ data }) => {
     databaseId,
     author,
     date,
-  } = page
-
+    uri
+  } = page  
   return (
     <Layout
-      bodyClass={`post-template-default single single-post postid-${databaseId} single-format-standard wp-embed-responsive singular has-post-thumbnail has-single-pagination showing-comments footer-top-visible customize-support`}
+    className={`post-template-default single single-post postid-${databaseId} single-format-standard wp-embed-responsive singular has-post-thumbnail has-single-pagination showing-comments footer-top-visible customize-support`}
     >
       <Seo title={title} description={excerpt} />
 
@@ -43,7 +58,30 @@ const post = ({ data }) => {
               dangerouslySetInnerHTML={{ __html: title }}
             />
              <PostMeta title={title} author={author} date={date} />
-             <div class="s9-widget-wrapper"></div>
+              <FacebookShareButton
+                quote={title}
+              >
+              <FacebookIcon
+                size={32} round={true}
+              />
+            </FacebookShareButton>
+
+            <TwitterShareButton
+              quote={title}
+            >
+              <TwitterIcon
+                size={32} round={true}
+              />
+            </TwitterShareButton>
+
+            <PinterestShareButton
+              url={uri}
+              media={featuredImage}
+              windowWidth={1000}
+              windowHeight={730}
+            >
+              <PinterestIcon size={32} round={true} />
+            </PinterestShareButton>
             <div
               className="intro-text section-inner max-percentage small"
               dangerouslySetInnerHTML={{ __html: excerpt }}
@@ -62,7 +100,7 @@ const post = ({ data }) => {
         
         <div className="section-inner">
           <AuthorBio author={author} />
-          <div class="s9-widget-wrapper"></div>
+          <div className="s9-widget-wrapper" />
           <ContentTypePagination
             previousPage={previousPage}
             nextPage={nextPage}
