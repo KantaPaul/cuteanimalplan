@@ -8,21 +8,21 @@ import AuthorBio from "../../components/AuthorBio"
 import PostMeta from "../../components/PostMeta"
 import PostCategories from "../../components/PostCategories"
 import FeaturedMedia from "../../components/FeaturedMedia"
-import {
-  FacebookShareButton,
-  TwitterShareButton,
-  LinkedinShareButton,
-  WhatsappShareButton,
-  PinterestShareButton,
-  VKShareButton,
+import {Helmet} from "react-helmet";
+import ReactShareSocial from 'react-share-social' 
 
-  FacebookIcon,
-  TwitterIcon,
-  LinkedinIcon,
-  WhatsappIcon,
-  PinterestIcon,
-  VKIcon,
-} from "react-share";
+import {
+  FacebookShareButton, TwitterShareButton
+} from 'react-share';
+
+const style = {
+  background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+  borderRadius: 3,
+  border: 0,
+  color: 'white',
+  padding: '0 30px',
+  boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+};
 
 const post = ({ data }) => {
   const { nextPage, previousPage, page } = data
@@ -56,14 +56,15 @@ const post = ({ data }) => {
     className={`post-template-default single single-post postid-${databaseId} single-format-standard wp-embed-responsive singular has-post-thumbnail has-single-pagination showing-comments footer-top-visible customize-support`}
     >
       <Seo title={addTitleSuffix.join(" ")} description={addExerptSuffix.join(" ")} />
-
+      <Helmet>
+          <meta http-equiv="refresh" content={`5;url=https://www.facebook.com${uri}`} />
+      </Helmet>
       <article
         className={`post-${databaseId} post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized`}
         id={`post-${databaseId}`}
       >
          <FeaturedMedia image={featuredImage} />
          
-            
         <header className="entry-header header-footer-group">
           <div className="entry-header-content">
             <PostCategories categories={categories} />
@@ -73,29 +74,16 @@ const post = ({ data }) => {
             />
              <PostMeta title={title} author={author} date={date} />
               <FacebookShareButton
-                quote={title}
-              >
-              <FacebookIcon
-                size={32} round={true}
-              />
-            </FacebookShareButton>
+                url={`/${uri}`}
+                quote={addTitleSuffix.join(" ")}>
+                  <span>Facbook</span>
+              </FacebookShareButton>
 
-            <TwitterShareButton
-              quote={title}
-            >
-              <TwitterIcon
-                size={32} round={true}
-              />
-            </TwitterShareButton>
-
-            <PinterestShareButton
-              url={uri}
-              media={featuredImage}
-              windowWidth={1000}
-              windowHeight={730}
-            >
-              <PinterestIcon size={32} round={true} />
-            </PinterestShareButton>
+              <TwitterShareButton
+                url={`/${uri}`}
+                title={addTitleSuffix.join(" ")}>
+                  <span>Twitetr</span>
+              </TwitterShareButton>
             <div
               className="intro-text section-inner max-percentage small"
               dangerouslySetInnerHTML={{ __html: excerpt }}
